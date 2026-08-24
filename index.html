@@ -1,0 +1,653 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Músico Profesional — Convocatoria</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&display=swap">
+<style>
+  :root{
+    /* light theme — warm, energetic paper */
+    --bg:#FBF2EC;
+    --surface:#FFFFFF;
+    --surface-2:#FCEDE4;
+    --ink:#231523;
+    --muted:#71586A;
+    --line:#EBDBD0;
+    --line-strong:#DCC6B8;
+
+    --tangerine:#F5451B;
+    --magenta:#E01F73;
+    --gold:#F0A227;
+    --grape:#6C2BD9;
+    --ok:#12996A;
+
+    --hero-a:#3A1150;
+    --hero-b:#7A1348;
+    --hero-c:#F5451B;
+    --on-hero:#FFF3EC;
+    --on-hero-muted:#F0C7BD;
+
+    --shadow:0 1px 2px rgba(35,21,35,.04), 0 12px 40px -18px rgba(108,43,217,.28);
+    --radius:18px;
+    --maxw:1080px;
+    --step:clamp(1rem,.9rem + .5vw,1.15rem);
+  }
+
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#150C1C;
+      --surface:#1E1329;
+      --surface-2:#241634;
+      --ink:#F7EBF3;
+      --muted:#B79BB0;
+      --line:#33203F;
+      --line-strong:#432B52;
+
+      --tangerine:#FF6A3D;
+      --magenta:#FF4C93;
+      --gold:#FFC24D;
+      --grape:#B78BFF;
+      --ok:#40D98C;
+
+      --hero-a:#2A0C3C;
+      --hero-b:#6E1147;
+      --hero-c:#F5451B;
+      --on-hero:#FFF3EC;
+      --on-hero-muted:#EFC3B8;
+
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 18px 50px -22px rgba(0,0,0,.7);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#150C1C; --surface:#1E1329; --surface-2:#241634;
+    --ink:#F7EBF3; --muted:#B79BB0; --line:#33203F; --line-strong:#432B52;
+    --tangerine:#FF6A3D; --magenta:#FF4C93; --gold:#FFC24D; --grape:#B78BFF; --ok:#40D98C;
+    --hero-a:#2A0C3C; --hero-b:#6E1147; --hero-c:#F5451B;
+    --on-hero:#FFF3EC; --on-hero-muted:#EFC3B8;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 18px 50px -22px rgba(0,0,0,.7);
+  }
+
+  *,*::before,*::after{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"Hanken Grotesk",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    font-size:var(--step);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--magenta);color:#fff}
+  a{color:inherit}
+  h1,h2,h3{
+    font-family:"Bricolage Grotesque","Hanken Grotesk",sans-serif;
+    font-weight:800;
+    line-height:1.02;
+    text-wrap:balance;
+    margin:0;
+    letter-spacing:-.02em;
+  }
+  p{margin:0}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 clamp(20px,5vw,44px)}
+  .eyebrow{
+    font-size:.74rem;font-weight:700;text-transform:uppercase;
+    letter-spacing:.22em;
+  }
+
+  /* ================= HERO ================= */
+  .hero{
+    position:relative;overflow:hidden;isolation:isolate;
+    color:var(--on-hero);
+    background:
+      radial-gradient(120% 130% at 12% 0%, var(--hero-c) 0%, transparent 42%),
+      radial-gradient(120% 120% at 88% 8%, var(--magenta) 0%, transparent 46%),
+      linear-gradient(150deg, var(--hero-a) 0%, var(--hero-b) 62%, var(--hero-a) 100%);
+  }
+  .hero::after{
+    content:"";position:absolute;inset:0;z-index:-1;
+    background:
+      repeating-linear-gradient(90deg, rgba(255,255,255,.05) 0 1px, transparent 1px 3px);
+    opacity:.35;mix-blend-mode:overlay;
+    -webkit-mask-image:linear-gradient(180deg,transparent,#000 30%,#000 70%,transparent);
+            mask-image:linear-gradient(180deg,transparent,#000 30%,#000 70%,transparent);
+  }
+  .hero .wrap{padding-top:clamp(30px,6vw,54px);padding-bottom:clamp(48px,8vw,92px)}
+  .topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{display:flex;align-items:baseline;gap:.55rem;font-family:"Bricolage Grotesque",sans-serif;font-weight:700;letter-spacing:-.01em}
+  .brand b{font-size:1.15rem}
+  .brand span{font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;color:var(--on-hero-muted)}
+  .tag{
+    font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.18em;
+    color:var(--on-hero);border:1px solid rgba(255,243,236,.35);
+    padding:.45rem .8rem;border-radius:999px;white-space:nowrap;
+  }
+  .hero-eyebrow{color:var(--on-hero-muted);margin:clamp(40px,7vw,72px) 0 .9rem}
+  .hero h1{
+    font-size:clamp(3rem,3rem + 6vw,7rem);
+    font-weight:800;letter-spacing:-.035em;
+  }
+  .hero h1 em{
+    font-style:normal;display:block;
+    background:linear-gradient(92deg,var(--gold),#FFE7B0 55%,var(--gold));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero-lead{
+    max-width:38ch;margin:1.6rem 0 0;font-size:clamp(1.05rem,1rem + .5vw,1.35rem);
+    color:var(--on-hero-muted);line-height:1.55;
+  }
+  .hero-cta{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:2.2rem}
+
+  .btn{
+    display:inline-flex;align-items:center;gap:.55rem;
+    font-family:"Hanken Grotesk",sans-serif;font-weight:700;font-size:.98rem;
+    text-decoration:none;padding:.9rem 1.5rem;border-radius:999px;
+    transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
+    border:1px solid transparent;
+  }
+  .btn .arw{transition:transform .18s ease}
+  .btn:hover .arw{transform:translateX(3px)}
+  .btn-primary{background:var(--tangerine);color:#fff;box-shadow:0 10px 30px -10px rgba(245,69,27,.7)}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 38px -12px rgba(245,69,27,.8)}
+  .btn-ghost{background:transparent;color:var(--on-hero);border-color:rgba(255,243,236,.4)}
+  .btn-ghost:hover{background:rgba(255,243,236,.1);transform:translateY(-2px)}
+
+  /* scholarship strip inside hero */
+  .schol{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:1px;margin-top:clamp(40px,6vw,64px);
+    background:rgba(255,243,236,.18);border:1px solid rgba(255,243,236,.18);
+    border-radius:var(--radius);overflow:hidden;
+  }
+  .schol > div{background:linear-gradient(180deg,rgba(20,8,28,.28),rgba(20,8,28,.12));padding:1.3rem 1.25rem}
+  .schol .k{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:clamp(1.7rem,1.4rem + 1.4vw,2.4rem);letter-spacing:-.02em;line-height:1}
+  .schol .k small{font-size:.62em;font-weight:700}
+  .schol .l{font-size:.78rem;text-transform:uppercase;letter-spacing:.12em;color:var(--on-hero-muted);margin-top:.5rem}
+  .schol .hl .k{color:var(--gold)}
+
+  /* ================= SECTIONS ================= */
+  section{padding:clamp(52px,8vw,96px) 0}
+  .section-head{max-width:60ch;margin-bottom:clamp(28px,4vw,44px)}
+  .section-head .eyebrow{color:var(--magenta);display:block;margin-bottom:.8rem}
+  .section-head h2{font-size:clamp(1.9rem,1.5rem + 2.4vw,3.1rem)}
+  .section-head p{color:var(--muted);margin-top:1rem;max-width:52ch}
+
+  .note{
+    font-size:.9rem;color:var(--muted);line-height:1.55;
+    border-left:3px solid var(--gold);padding:.2rem 0 .2rem 1rem;margin-top:1.4rem;max-width:70ch;
+  }
+
+  /* video requirements — two-part video */
+  .videobox{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.2rem;
+  }
+  .vcard{
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+    padding:1.6rem 1.5rem;box-shadow:var(--shadow);position:relative;overflow:hidden;
+  }
+  .vcard::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--accentbar,var(--tangerine))}
+  .vcard .num{
+    font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:.8rem;
+    color:var(--muted);letter-spacing:.1em;text-transform:uppercase;
+  }
+  .vcard h3{font-size:1.3rem;margin:.4rem 0 .5rem}
+  .vcard .dur{
+    display:inline-flex;align-items:center;gap:.45rem;font-weight:700;color:var(--tangerine);
+    font-size:.95rem;background:var(--surface-2);padding:.35rem .75rem;border-radius:999px;margin-bottom:.9rem;
+  }
+  .vcard p{color:var(--muted);font-size:.95rem}
+
+  /* intro checklist */
+  .grid-2{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(24px,4vw,48px);align-items:start}
+  @media (max-width:760px){.grid-2{grid-template-columns:1fr}}
+  .checklist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.2rem}
+  .checklist li{
+    display:flex;gap:.9rem;align-items:flex-start;padding:.95rem .2rem;border-bottom:1px solid var(--line);
+  }
+  .checklist li:last-child{border-bottom:0}
+  .checklist .mk{
+    flex:none;width:1.9rem;height:1.9rem;border-radius:50%;display:grid;place-items:center;
+    font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:.85rem;
+    background:var(--surface-2);color:var(--magenta);border:1px solid var(--line-strong);
+  }
+  .checklist .tx{line-height:1.45}
+  .checklist .tx b{font-weight:700}
+  .checklist .tx span{display:block;color:var(--muted);font-size:.9rem}
+
+  .panel{
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+    padding:clamp(1.4rem,3vw,2rem);box-shadow:var(--shadow);
+  }
+  .panel h3{font-size:1.3rem;margin-bottom:.7rem}
+  .panel p{color:var(--muted);font-size:.96rem}
+  .panel + .panel{margin-top:1rem}
+
+  /* filming tips */
+  .tips{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1rem}
+  .tip{
+    background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:1.3rem;
+  }
+  .tip .ic{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;color:var(--grape);font-size:.78rem;letter-spacing:.14em;text-transform:uppercase}
+  .tip h3{font-size:1.05rem;margin:.55rem 0 .4rem}
+  .tip p{color:var(--muted);font-size:.9rem;line-height:1.5}
+
+  /* steps to submit */
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;counter-reset:s}
+  .step{position:relative;background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:1.5rem 1.3rem}
+  .step::before{
+    counter-increment:s;content:counter(s,decimal-leading-zero);
+    font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:1.3rem;color:var(--tangerine);
+    display:block;margin-bottom:.5rem;
+  }
+  .step h3{font-size:1.05rem;margin-bottom:.35rem}
+  .step p{color:var(--muted);font-size:.9rem;line-height:1.5}
+  .step a{color:var(--magenta);font-weight:600}
+
+  .contact{
+    display:flex;align-items:center;gap:.9rem;margin-top:1.4rem;
+    background:var(--surface);border:1px solid var(--line);border-radius:14px;
+    padding:1rem 1.2rem;box-shadow:var(--shadow);max-width:70ch;
+  }
+  .contact .wa{width:2rem;height:2rem;flex:none}
+  .contact p{color:var(--muted);font-size:.95rem;line-height:1.5}
+
+  /* CTA band */
+  .cta-band{
+    color:var(--on-hero);border-radius:calc(var(--radius) + 6px);overflow:hidden;position:relative;
+    background:
+      radial-gradient(120% 140% at 85% 10%, var(--magenta) 0%, transparent 50%),
+      linear-gradient(140deg,var(--hero-a),var(--hero-b) 70%,var(--hero-c));
+    padding:clamp(2.2rem,5vw,3.6rem);
+    text-align:center;
+  }
+  .cta-band h2{font-size:clamp(1.8rem,1.4rem + 2.4vw,2.9rem)}
+  .cta-band p{color:var(--on-hero-muted);max-width:46ch;margin:1rem auto 1.8rem}
+  .cta-band .btn-primary{box-shadow:0 12px 34px -8px rgba(0,0,0,.5)}
+  .cta-sub{margin-top:1.2rem}
+  .cta-sub a{color:var(--on-hero-muted);font-weight:600;font-size:.9rem;text-decoration:none;border-bottom:1px solid rgba(255,243,236,.3);padding-bottom:2px;transition:color .15s}
+  .cta-sub a:hover{color:var(--on-hero)}
+
+  /* pricing / valores */
+  .price-wrap{display:grid;gap:1.2rem}
+  .price-hero{
+    color:var(--on-hero);border-radius:var(--radius);overflow:hidden;position:relative;
+    background:
+      radial-gradient(120% 160% at 90% 15%, var(--magenta) 0%, transparent 55%),
+      linear-gradient(135deg,var(--hero-a),var(--hero-b) 75%,var(--hero-c));
+    padding:clamp(1.7rem,4vw,2.6rem);text-align:center;
+  }
+  .price-label{display:block;text-transform:uppercase;letter-spacing:.2em;font-size:.76rem;font-weight:700;color:var(--on-hero-muted)}
+  .price-num{display:block;font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:clamp(2.8rem,2rem + 4.5vw,4.6rem);line-height:1;letter-spacing:-.02em;margin:.5rem 0 .2rem}
+  .price-num small{font-size:.38em;font-weight:700;color:var(--gold);vertical-align:.5em;margin-right:.2em;letter-spacing:.02em}
+  .price-note{display:block;color:var(--on-hero-muted);font-size:.98rem;max-width:46ch;margin:.7rem auto 0;line-height:1.5}
+  .incl-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:1rem}
+  @media (max-width:700px){.incl-grid{grid-template-columns:1fr}}
+  .incl{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:clamp(1.4rem,3vw,1.8rem);box-shadow:var(--shadow)}
+  .incl-title{font-size:1.2rem;display:flex;align-items:center;gap:.55rem;margin-bottom:1.1rem}
+  .incl-title .dot{width:.7rem;height:.7rem;border-radius:50%;flex:none}
+  .incl-yes .dot{background:var(--ok)}
+  .incl-no .dot{background:var(--muted)}
+  .ilist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.8rem}
+  .ilist li{position:relative;padding-left:1.9rem;color:var(--muted);line-height:1.5}
+  .ilist li::before{position:absolute;left:0;top:-.02em;font-weight:800;font-family:"Bricolage Grotesque",sans-serif;font-size:1.05rem}
+  .ilist.yes li::before{content:"\2713";color:var(--ok)}
+  .ilist.no li::before{content:"\2715";color:var(--muted)}
+
+  /* testimonials */
+  .tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem}
+  .tcard{
+    display:flex;flex-direction:column;gap:.9rem;text-decoration:none;color:inherit;
+    background:var(--surface);border:1px solid var(--line);border-radius:16px;
+    padding:1.5rem 1.4rem;box-shadow:var(--shadow);position:relative;overflow:hidden;
+    transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  }
+  .tcard::before{
+    content:"\201C";position:absolute;top:.1rem;right:1rem;
+    font-family:"Bricolage Grotesque",serif;font-weight:800;font-size:5rem;line-height:1;
+    color:var(--magenta);opacity:.16;
+  }
+  .tcard:hover{transform:translateY(-4px);box-shadow:0 18px 44px -18px rgba(224,31,115,.4);border-color:var(--magenta)}
+  .tcard .tk{
+    font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:.78rem;
+    letter-spacing:.12em;text-transform:uppercase;color:var(--muted);
+  }
+  .tbody{display:flex;flex-direction:column;gap:.2rem}
+  .tcard .tt{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:1.25rem;line-height:1.15;color:var(--ink)}
+  .tcard .tr{color:var(--muted);font-size:.92rem;line-height:1.35}
+  .tcard .tf{
+    margin-top:auto;display:flex;align-items:center;gap:.5rem;
+    font-weight:700;font-size:.9rem;color:var(--magenta);
+  }
+  .tcard .tf svg{width:1.05rem;height:1.05rem;flex:none}
+  .tcard .arw{transition:transform .18s ease}
+  .tcard:hover .arw{transform:translateX(3px)}
+
+  footer{padding:2.4rem 0 3rem;color:var(--muted);font-size:.85rem;border-top:1px solid var(--line)}
+  footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center}
+  footer a{color:var(--magenta);text-decoration:none;font-weight:600}
+
+  .inline-link{color:var(--magenta);font-weight:600;text-decoration:none;border-bottom:2px solid transparent;transition:border-color .15s}
+  .inline-link:hover{border-color:var(--magenta)}
+
+  a:focus-visible,.btn:focus-visible{outline:3px solid var(--gold);outline-offset:3px;border-radius:6px}
+
+  /* entrance motion */
+  .rise{opacity:0;transform:translateY(18px);animation:rise .8s cubic-bezier(.2,.7,.2,1) forwards}
+  .d1{animation-delay:.05s}.d2{animation-delay:.15s}.d3{animation-delay:.25s}.d4{animation-delay:.35s}.d5{animation-delay:.45s}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){
+    .rise{animation:none;opacity:1;transform:none}
+    .btn,.btn .arw{transition:none}
+  }
+</style>
+</head>
+<body>
+
+  <header class="hero">
+    <div class="wrap">
+      <div class="topbar rise d1">
+        <div class="brand"><b>TEB</b><span>New York City</span></div>
+        <span class="tag">Convocatoria de becas</span>
+      </div>
+
+      <p class="eyebrow hero-eyebrow rise d2">Programa · Audición 2026</p>
+      <h1 class="rise d2">Músico<br><em>Profesional</em></h1>
+      <p class="hero-lead rise d3">Un programa de estudios pensado para músicos que quieren dar el próximo salto. Para esta convocatoria se entregan medias becas y becas parciales.</p>
+
+      <div class="hero-cta rise d3">
+        <a class="btn btn-primary" href="#material">Cómo preparar la audición <span class="arw">→</span></a>
+        <a class="btn btn-ghost" href="#postular">Enviar mi audición</a>
+      </div>
+
+      <div class="schol rise d4" aria-label="Becas disponibles">
+        <div class="hl"><div class="k">2</div><div class="l">Medias becas</div></div>
+        <div><div class="k"><small>USD</small> 1200</div><div class="l">Beca parcial</div></div>
+        <div><div class="k"><small>USD</small> 1000</div><div class="l">Beca parcial</div></div>
+        <div><div class="k"><small>USD</small> 800</div><div class="l">Beca parcial</div></div>
+        <div><div class="k"><small>USD</small> 600</div><div class="l">Beca parcial</div></div>
+        <div><div class="k"><small>USD</small> 400</div><div class="l">Beca parcial</div></div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- BECAS DETALLE -->
+    <section id="becas">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Sobre las becas</span>
+          <h2>Cómo funcionan los montos</h2>
+          <p>No se entregarán becas completas. Los importes detallados se consideran a modo de descuento del valor total del programa.</p>
+        </div>
+        <div class="videobox">
+          <div class="vcard" style="--accentbar:var(--gold)">
+            <h3>2 medias becas + becas parciales</h3>
+            <p>Se entregan 2 medias becas y becas parciales de USD 1200, 1000, 800, 600 y 400. Las medias becas cubren la mitad del valor total del programa.</p>
+          </div>
+          <div class="vcard" style="--accentbar:var(--grape)">
+            <h3>Descuento, no efectivo</h3>
+            <p>Los importes no se entregan en efectivo: se aplican como descuento del valor total del programa.</p>
+          </div>
+        </div>
+        <p class="note">Todos los importes están expresados en dólares norteamericanos (USD).</p>
+      </div>
+    </section>
+
+    <!-- MATERIAL A PREPARAR -->
+    <section id="material" style="background:var(--surface-2)">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Material a preparar</span>
+          <h2>Tu video de audición</h2>
+          <p>Presentá un único video que combine una breve introducción personal y una interpretación musical.</p>
+        </div>
+        <div class="videobox">
+          <div class="vcard" style="--accentbar:var(--magenta)">
+            <div class="num">Parte 01</div>
+            <div class="dur">● 30 / 40 segundos</div>
+            <h3>Introducción breve</h3>
+            <p>Presentación personal hablada, con voz clara y precisa, antes de tocar.</p>
+          </div>
+          <div class="vcard" style="--accentbar:var(--tangerine)">
+            <div class="num">Parte 02</div>
+            <div class="dur">● hasta 1:30 min</div>
+            <h3>Canción de cualquier estilo</h3>
+            <p>Interpretá un tema que te represente y muestre tu variedad en el instrumento.</p>
+          </div>
+        </div>
+        <p class="note">Entre la introducción y la performance puede haber un corte en la edición. El resto del video debe grabarse en una sola toma.</p>
+      </div>
+    </section>
+
+    <!-- CHECKLIST INTRO -->
+    <section id="intro">
+      <div class="wrap">
+        <div class="grid-2">
+          <div>
+            <div class="section-head">
+              <span class="eyebrow">La introducción</span>
+              <h2>Qué decir en tu presentación</h2>
+              <p>Que tu voz sea clara y precisa. Empezá el video con estos elementos, a modo de desarrollo personal.</p>
+            </div>
+            <ul class="checklist">
+              <li><span class="mk">1</span><span class="tx"><b>Nombre completo</b></span></li>
+              <li><span class="mk">2</span><span class="tx"><b>Fecha de la grabación</b><span>El día en que estás realizando el video.</span></span></li>
+              <li><span class="mk">3</span><span class="tx"><b>Ciudad y país donde residís</b></span></li>
+              <li><span class="mk">4</span><span class="tx"><b>Programa al que aplicás</b><span>Músico Profesional.</span></span></li>
+              <li><span class="mk">5</span><span class="tx"><b>Nombre de la canción / tema a interpretar</b></span></li>
+              <li><span class="mk">6</span><span class="tx"><b>Tu motivación</b><span>Por qué es importante este viaje de estudios, qué querés llevarte de la experiencia y las razones por las que necesitás la beca.</span></span></li>
+            </ul>
+          </div>
+          <div>
+            <div class="panel">
+              <h3>La performance</h3>
+              <p>Prepará una canción o tema de cualquier estilo. Explayá tus posibilidades en el instrumento: melodía, solo, acompañamiento, diferentes dinámicas y timbres (cuando la música lo pida).</p>
+            </div>
+            <div class="panel">
+              <h3>Duración y formato</h3>
+              <p>El tema no debe superar 1:30 min. Puede ser con pista, con acompañamiento instrumental en vivo, o solo con tu instrumento. Tocá algo que te suene natural y que te represente.</p>
+            </div>
+            <div class="panel">
+              <h3>Mostrá variedad</h3>
+              <p>Aprovechá ese tiempo para demostrar la variedad de tus habilidades en la música. La recomendación es no tocar siempre lo mismo.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TIPS TÉCNICOS -->
+    <section id="tips" style="background:var(--surface-2)">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Leer con atención</span>
+          <h2>Recomendaciones para grabar</h2>
+          <p>Cuidá estos detalles antes de grabar: hacen la diferencia en el resultado final.</p>
+        </div>
+        <div class="tips">
+          <div class="tip"><div class="ic">Cámara fija</div><h3>Sin movimiento</h3><p>Colocá la cámara sobre un soporte, trípode o mesa. Filmá de forma horizontal.</p></div>
+          <div class="tip"><div class="ic">Una sola toma</div><h3>Sin ediciones</h3><p>La performance va en una toma continua, sin cortes ni correcciones para perfeccionarla.</p></div>
+          <div class="tip"><div class="ic">Encuadre</div><h3>Ambas manos visibles</h3><p>Elegí un encuadre en donde se vean con claridad ambas manos.</p></div>
+          <div class="tip"><div class="ic">Imagen</div><h3>Luz y foco</h3><p>Antes de grabar, asegurate de que la iluminación y el foco sean adecuados.</p></div>
+          <div class="tip"><div class="ic">Sonido</div><h3>Audio claro</h3><p>Que el sonido sea nítido, sin ruido de ambiente molesto de fondo.</p></div>
+          <div class="tip"><div class="ic">Calidad</div><h3>La mejor posible</h3><p>Usá la mejor calidad de video que tengas a disposición.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PASOS PARA ENVIAR -->
+    <section id="enviar">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Cómo enviar</span>
+          <h2>Subir y postular</h2>
+        </div>
+        <div class="steps">
+          <div class="step">
+            <h3>Subí el video a YouTube, Vimeo o Google Drive</h3>
+            <p>Dejalo accesible por enlace: <b>público</b> o <b>no listado</b> (unlisted).</p>
+          </div>
+          <div class="step">
+            <h3>Copiá el enlace</h3>
+            <p>Vas a necesitar el link de tu video para completar la postulación.</p>
+          </div>
+          <div class="step">
+            <h3>Completá el formulario en el Paso 2</h3>
+            <p>Ingresá el enlace de tu video junto a tus datos personales en el <a href="https://sites.google.com/view/teb-nyc/inicio" target="_blank" rel="noopener">Paso 2 del formulario</a>.</p>
+          </div>
+          <div class="step">
+            <h3>Esperá los resultados</h3>
+            <p>Esperá aproximadamente un mes hasta que demos los resultados.</p>
+          </div>
+        </div>
+        <p class="note">¿Querés consejos para realizar la audición? Mirá <a class="inline-link" href="https://www.instagram.com/reel/DH6O-yYO9Ao/" target="_blank" rel="noopener">este video en Instagram</a> con recomendaciones.</p>
+        <div class="contact">
+          <svg class="wa" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.2.6 4.3 1.7 6.2L4 29l8-2.1c1.8 1 3.9 1.5 6 1.5 6.6 0 12-5.4 12-12S22.6 3 16 3z" fill="var(--ok)"/><path d="M12.3 9.5c-.3-.6-.5-.6-.8-.6h-.7c-.2 0-.6.1-.9.4-.3.3-1.2 1.2-1.2 2.9s1.2 3.4 1.4 3.6c.2.3 2.4 3.8 6 5.2 3 1.2 3.6 1 4.2.9.6-.1 2-.8 2.3-1.6.3-.8.3-1.5.2-1.6-.1-.2-.3-.2-.7-.4-.3-.2-2-1-2.3-1.1-.3-.1-.5-.2-.8.2-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-.4-.2-1.5-.6-2.9-1.8-1.1-1-1.8-2.2-2-2.5-.2-.4 0-.5.1-.7.2-.2.4-.4.5-.6.2-.2.2-.4.4-.6.1-.2.1-.4 0-.6 0-.2-.7-2-1-2.5z" fill="#fff"/></svg>
+          <p>Cualquier pregunta podés escribirle a <b>Andrés Rot</b>, director del programa Músico Pro, por WhatsApp: <a class="inline-link" href="https://wa.me/16466277427" target="_blank" rel="noopener">+1 646 627 7427</a>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIOS -->
+    <section id="testimonios" style="background:var(--surface-2)">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Testimonios reales</span>
+          <h2>Historias de nuestra comunidad</h2>
+          <p>Experiencias compartidas por participantes en Instagram. Tocá cualquier tarjeta para ver la publicación original.</p>
+        </div>
+        <div class="tgrid">
+          <a class="tcard" href="https://www.instagram.com/p/DcL52F_FdMo/" target="_blank" rel="noopener">
+            <span class="tk">Testimonio 01</span>
+            <span class="tbody"><span class="tt">Antú</span><span class="tr">Guitarrista chileno</span></span>
+            <span class="tf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg> Ver en Instagram <span class="arw">→</span></span>
+          </a>
+          <a class="tcard" href="https://www.instagram.com/p/DbzeBrDlgam/" target="_blank" rel="noopener">
+            <span class="tk">Testimonio 02</span>
+            <span class="tbody"><span class="tt">Maca</span><span class="tr">Guitarrista colombiana</span></span>
+            <span class="tf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg> Ver en Instagram <span class="arw">→</span></span>
+          </a>
+          <a class="tcard" href="https://www.instagram.com/p/DbyeVhPEd6W/" target="_blank" rel="noopener">
+            <span class="tk">Testimonio 03</span>
+            <span class="tbody"><span class="tt">Vicente</span><span class="tr">Guitarrista chileno</span></span>
+            <span class="tf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg> Ver en Instagram <span class="arw">→</span></span>
+          </a>
+          <a class="tcard" href="https://www.instagram.com/p/Db4QWoJkTlH/" target="_blank" rel="noopener">
+            <span class="tk">Testimonio 04</span>
+            <span class="tbody"><span class="tt">Mili</span><span class="tr">Bajista argentina</span></span>
+            <span class="tf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg> Ver en Instagram <span class="arw">→</span></span>
+          </a>
+          <a class="tcard" href="https://www.instagram.com/p/DcJvK9bCcGr/" target="_blank" rel="noopener">
+            <span class="tk">Testimonio 05</span>
+            <span class="tbody"><span class="tt">Eddie</span><span class="tr">Guitarrista y cantante mexicano</span></span>
+            <span class="tf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg> Ver en Instagram <span class="arw">→</span></span>
+          </a>
+          <a class="tcard" href="https://www.instagram.com/p/DcHsJX8jQBO/" target="_blank" rel="noopener">
+            <span class="tk">Testimonio 06</span>
+            <span class="tbody"><span class="tt">Tomi</span><span class="tr">Guitarrista argentino</span></span>
+            <span class="tf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg> Ver en Instagram <span class="arw">→</span></span>
+          </a>
+          <a class="tcard" href="https://www.instagram.com/p/DcOlHFpm-W4/" target="_blank" rel="noopener">
+            <span class="tk">Testimonio 07</span>
+            <span class="tbody"><span class="tt">Sebastián</span><span class="tr">Baterista ecuatoriano</span></span>
+            <span class="tf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg> Ver en Instagram <span class="arw">→</span></span>
+          </a>
+          <a class="tcard" href="https://www.instagram.com/p/DcEYivKlTUm/" target="_blank" rel="noopener">
+            <span class="tk">Testimonio 08</span>
+            <span class="tbody"><span class="tt">Jero</span><span class="tr">Guitarrista argentino</span></span>
+            <span class="tf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg> Ver en Instagram <span class="arw">→</span></span>
+          </a>
+          <a class="tcard" href="https://www.instagram.com/p/Db_BTlSjoq1/" target="_blank" rel="noopener">
+            <span class="tk">Testimonio 09</span>
+            <span class="tbody"><span class="tt">Diego</span><span class="tr">Guitarrista mexicano</span></span>
+            <span class="tf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg> Ver en Instagram <span class="arw">→</span></span>
+          </a>
+          <a class="tcard" href="https://www.instagram.com/p/Db9MxL9kbzt/" target="_blank" rel="noopener">
+            <span class="tk">Testimonio 10</span>
+            <span class="tbody"><span class="tt">Facu</span><span class="tr">Pianista argentino</span></span>
+            <span class="tf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg> Ver en Instagram <span class="arw">→</span></span>
+          </a>
+          <a class="tcard" href="https://www.instagram.com/p/DbY3N4kFdm2/" target="_blank" rel="noopener">
+            <span class="tk">Testimonio 11</span>
+            <span class="tbody"><span class="tt">Franco</span><span class="tr">Baterista argentino</span></span>
+            <span class="tf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg> Ver en Instagram <span class="arw">→</span></span>
+          </a>
+          <a class="tcard" href="https://www.instagram.com/p/DbY9ooiBLfB/" target="_blank" rel="noopener">
+            <span class="tk">Testimonio 12</span>
+            <span class="tbody"><span class="tt">Milu</span><span class="tr">Cantante y guitarrista argentina</span></span>
+            <span class="tf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg> Ver en Instagram <span class="arw">→</span></span>
+          </a>
+          <a class="tcard" href="https://www.instagram.com/p/DcZs1TOFBjZ/" target="_blank" rel="noopener">
+            <span class="tk">Testimonio 13</span>
+            <span class="tbody"><span class="tt">Emma</span><span class="tr">Bajista argentino</span></span>
+            <span class="tf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg> Ver en Instagram <span class="arw">→</span></span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- VALORES -->
+    <section id="valores" style="background:var(--surface-2)">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Valores</span>
+          <h2>Qué incluye el viaje</h2>
+          <p>Las becas funcionan como un descuento sobre este valor total.</p>
+        </div>
+        <div class="price-wrap">
+          <div class="price-hero">
+            <span class="price-label">Valor total del viaje</span>
+            <span class="price-num"><small>USD</small>3.750</span>
+            <span class="price-note">Las medias becas y las becas parciales se descuentan de este total.</span>
+          </div>
+          <div class="incl-grid">
+            <div class="incl">
+              <h3 class="incl-title incl-yes"><span class="dot"></span>Incluye</h3>
+              <ul class="ilist yes">
+                <li>Alojamiento en un lindo y cómodo hotel en la zona del centro de Manhattan, en habitaciones compartidas, durante 14 noches y 15 días.</li>
+                <li>Todo el programa de estudios: más de 60 horas de clases, con clases todos los días.</li>
+                <li>Más de 90 horas de actividades en general.</li>
+                <li>Una salida de regalo a ver un show de Broadway.</li>
+              </ul>
+            </div>
+            <div class="incl">
+              <h3 class="incl-title incl-no"><span class="dot"></span>No incluye</h3>
+              <ul class="ilist no">
+                <li>Tu ticket de avión.</li>
+                <li>Tu seguro médico.</li>
+                <li>Tus comidas.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA FINAL -->
+    <section id="postular">
+      <div class="wrap">
+        <div class="cta-band rise">
+          <h2>¿Listo para postular?</h2>
+          <p>Preparate, grabá tu audición y completá el formulario con el enlace de tu video. Te esperamos.</p>
+          <a class="btn btn-primary" href="https://sites.google.com/view/teb-nyc/inicio" target="_blank" rel="noopener">Ir al formulario y postular <span class="arw">→</span></a>
+          <div class="cta-sub"><a href="https://sites.google.com/view/teb-nyc/inicio" target="_blank" rel="noopener">Ver materias y precios del programa →</a></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="brand"><b>TEB</b><span style="color:var(--muted)">New York City</span></div>
+      <div>Programa Músico Profesional · <a href="https://sites.google.com/view/teb-nyc/inicio" target="_blank" rel="noopener">sites.google.com/view/teb-nyc</a></div>
+    </div>
+  </footer>
+
+</body>
+</html>
