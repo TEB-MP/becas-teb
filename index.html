@@ -297,6 +297,26 @@
   .ilist.yes li::before{content:"\2713";color:var(--ok)}
   .ilist.no li::before{content:"\2715";color:var(--muted)}
 
+  /* beca calculator */
+  .calc{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:clamp(1.5rem,3.5vw,2.2rem);box-shadow:var(--shadow)}
+  .calc-title{font-size:clamp(1.25rem,1rem + 1.1vw,1.7rem);margin-bottom:1.3rem;text-wrap:balance}
+  .calc-btns{display:flex;flex-wrap:wrap;gap:.6rem;margin-bottom:1.5rem}
+  .calc-btn{
+    font-family:"Hanken Grotesk",sans-serif;font-weight:700;font-size:.95rem;cursor:pointer;
+    padding:.7rem 1.2rem;border-radius:999px;border:1.5px solid var(--line-strong);
+    background:var(--surface-2);color:var(--ink);transition:transform .16s ease, background .16s ease, border-color .16s ease, box-shadow .16s ease;
+  }
+  .calc-btn:hover{border-color:var(--magenta);transform:translateY(-1px)}
+  .calc-btn.is-active{background:var(--tangerine);border-color:var(--tangerine);color:#fff;box-shadow:0 8px 20px -8px rgba(245,69,27,.6)}
+  .calc-btn:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+  .calc-result{display:flex;flex-direction:column;gap:.35rem;padding-top:1.3rem;border-top:1px solid var(--line)}
+  .calc-reslabel{text-transform:uppercase;letter-spacing:.16em;font-size:.74rem;font-weight:700;color:var(--muted)}
+  .calc-total{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:clamp(2.6rem,1.8rem + 3.4vw,4rem);line-height:1;letter-spacing:-.02em;color:var(--tangerine)}
+  .calc-total small{font-size:.36em;font-weight:700;color:var(--gold);vertical-align:.55em;margin-right:.2em;letter-spacing:.02em}
+  .calc-sub{color:var(--muted);font-size:.95rem;margin-top:.35rem}
+  .calc-sub s{opacity:.8}
+  @media (prefers-reduced-motion:reduce){.calc-btn{transition:none}}
+
   /* testimonials */
   .tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem}
   .tcard{
@@ -624,6 +644,23 @@
               </ul>
             </div>
           </div>
+
+          <div class="calc">
+            <h3 class="calc-title">¿Cuál es el valor del programa con cada beca?</h3>
+            <div class="calc-btns" role="group" aria-label="Elige una beca">
+              <button type="button" class="calc-btn is-active" data-disc="1875" data-label="Media beca (50%)" aria-pressed="true">Media beca</button>
+              <button type="button" class="calc-btn" data-disc="1200" aria-pressed="false">Beca USD 1200</button>
+              <button type="button" class="calc-btn" data-disc="1000" aria-pressed="false">Beca USD 1000</button>
+              <button type="button" class="calc-btn" data-disc="800" aria-pressed="false">Beca USD 800</button>
+              <button type="button" class="calc-btn" data-disc="600" aria-pressed="false">Beca USD 600</button>
+              <button type="button" class="calc-btn" data-disc="400" aria-pressed="false">Beca USD 400</button>
+            </div>
+            <div class="calc-result" aria-live="polite">
+              <span class="calc-reslabel">Valor del programa con esta beca</span>
+              <span class="calc-total"><small>USD</small><span id="calcNum">1.875</span></span>
+              <span class="calc-sub">Antes <s>USD 3.750</s> · descuento de <span id="calcDisc">USD 1.875 (50%)</span></span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -648,6 +685,32 @@
       <div>Programa Músico Profesional · <a href="https://sites.google.com/view/teb-nyc/inicio" target="_blank" rel="noopener">sites.google.com/view/teb-nyc</a></div>
     </div>
   </footer>
+
+  <script>
+    (function(){
+      var BASE = 3750;
+      var btns = document.querySelectorAll('.calc-btn');
+      var num = document.getElementById('calcNum');
+      var disc = document.getElementById('calcDisc');
+      if(!btns.length || !num || !disc) return;
+      function fmt(n){ return n.toLocaleString('es-AR'); }
+      function select(btn){
+        for(var i=0;i<btns.length;i++){
+          btns[i].classList.remove('is-active');
+          btns[i].setAttribute('aria-pressed','false');
+        }
+        btn.classList.add('is-active');
+        btn.setAttribute('aria-pressed','true');
+        var d = parseInt(btn.getAttribute('data-disc'),10) || 0;
+        num.textContent = fmt(BASE - d);
+        var label = btn.getAttribute('data-label');
+        disc.textContent = label ? ('USD ' + fmt(d) + ' (50%)') : ('USD ' + fmt(d));
+      }
+      for(var i=0;i<btns.length;i++){
+        btns[i].addEventListener('click', function(){ select(this); });
+      }
+    })();
+  </script>
 
 </body>
 </html>
